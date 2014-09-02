@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" Fig Seed, plant your ideas.
+""" Fig Seed, plant your project.
 
 Usage:
   fig-seed.py list
