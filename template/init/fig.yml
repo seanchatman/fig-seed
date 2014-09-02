@@ -1,0 +1,11 @@
+web:
+  build: .
+  volumes:
+    - .:/code
+#  command: echo "Hello, world!"
+#  ports:
+#    - "8000:8000"
+#  links:
+#    - db
+#db:
+#  image: postgres
