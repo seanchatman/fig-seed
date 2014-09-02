@@ -3,7 +3,6 @@
 
 Usage:
   fig-seed.py list
-  fig-seed.py up <template_name>
   fig-seed.py [-v] init <target_directory>
   fig-seed.py [-v] init <template_name> <target_directory>
 
@@ -18,7 +17,6 @@ Options:
 
 Example: fig-seed.py init /tmp/init
          fig-seed.py init fig-flask /tmp/fig-flask
-         fig-seed.py up fig-flask
 """
 from docopt import docopt
 #from subprocess import call
@@ -64,13 +62,6 @@ def init():
         if args['-v']:
             print 'Creating %s.' % args['<template_name>']
         export('init', args['<target_directory>'], template_dir)
-
-
-def up():
-    if args['-v']:
-        print 'Starting %s.' % args['<template_name>']
-    #call(['fig', ])
-
 
 
 if __name__ == '__main__':
