@@ -3,7 +3,8 @@
 
 Usage:
   fig-seed.py list
-  fig-seed.py [-v] init <target_directory>
+  fig-seed.py [-v] init
+  fig-seed.py [-v] init <template_name>
   fig-seed.py [-v] init <template_name> <target_directory>
 
 
@@ -30,8 +31,9 @@ __author__ = 'arby'
 def list_templates():
     template_dir = os.getcwd() + '/template'
     templates = os.listdir(template_dir)
+
+    print('Template list:')
     for x in templates:
-        print('Template list:')
         print(x)
 
 
@@ -43,8 +45,10 @@ def export(name, dest, template_dir):
 
     if args['-v']:
         print 'Copying to %s.' % dest
+
     template = template_dir + '/' + name
     shutil.copytree(template, dest)
+
     if args['-v']:
         for root, dirs, files in os.walk(dest):
             for dest_file in files:
@@ -55,17 +59,23 @@ def init():
     template_dir = os.getcwd() + '/template'
 
     if args['<template_name>']:
-        if args['-v']:
-            print 'Creating %s.' % args['<template_name>']
-        export(args['<template_name>'], args['<target_directory>'], template_dir)
+        template_name = args['<template_name>']
     else:
-        if args['-v']:
-            print 'Creating %s.' % args['<template_name>']
-        export('init', args['<target_directory>'], template_dir)
+        template_name = 'init'
+
+    if args['<target_directory>']:
+        target_dir = args['<target_directory>']
+    else:
+        target_dir = '/tmp/' + template_name
+
+    if args['-v']:
+        print 'Creating %s at %s.' % (template_name, template_dir)
+
+    export(template_name, target_dir, template_dir)
 
 
 if __name__ == '__main__':
-    args = docopt(__doc__, version='fig-seed 0.1')
+    args = docopt(__doc__, version='fig-seed 0.2')
 
     if args['list']:
         list_templates()
