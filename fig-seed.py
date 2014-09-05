@@ -3,29 +3,32 @@
 
 Usage:
   fig-seed.py list
-  fig-seed.py [-v] init
-  fig-seed.py [-v] init <template_name>
-  fig-seed.py [-v] init <template_name> <target_directory>
+  fig-seed.py up <template_name>
+  fig-seed.py [-uv] init [<template_name> <target_directory>]
 
+  -v, --verbose       verbose mode
+  -u, --up            fig up -d
 
 Arguments:
   template_name        folder name in template directory
   target_directory     where the template is copied.
 
-Options:
-  -h       --help
-  -v       verbose mode
 
 Example: fig-seed.py init /tmp/init
          fig-seed.py init fig-flask /tmp/fig-flask
 """
 from docopt import docopt
-#from subprocess import call
 
 import os
 import shutil
+import subprocess
+import shelve
 
 __author__ = 'arby'
+
+
+def call(call_args):
+    subprocess.call(call_args)
 
 
 def list_templates():
@@ -73,6 +76,16 @@ def init():
 
     export(template_name, target_dir, template_dir)
 
+    if args['-u']:
+        os.chdir(target_dir)
+        call(["fig", "up", "-d"])
+
+
+def up():
+    target_dir = os.getcwd() + '/template/' + args['<template_name>']
+    os.chdir(target_dir)
+    call(["fig", "up", "-d"])
+
 
 if __name__ == '__main__':
     args = docopt(__doc__, version='fig-seed 0.2')
@@ -82,3 +95,6 @@ if __name__ == '__main__':
 
     if args['init']:
         init()
+
+    if args['up']:
+        up()
