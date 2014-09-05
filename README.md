@@ -1,7 +1,6 @@
 fig-seed
 ========
 
-Generate a living application with Fig
+Plant your project.
 
 Current version: 0.2
-
