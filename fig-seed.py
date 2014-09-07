@@ -3,6 +3,8 @@
 
 Usage:
   fig-seed.py list
+  fig-seed.py kill
+
   fig-seed.py up <template_name>
   fig-seed.py sample <template_name>
   fig-seed.py [-uv] init [<template_name> <target_directory>]
@@ -30,6 +32,11 @@ __author__ = 'arby'
 #docker run --rm -v /usr/local/bin:/target jpetazzo/nsenter
 #docker-enter a30645361de9 ls -la
 
+def vprint(value):
+    if args['-v']:
+        print value
+
+
 def call(call_args):
     subprocess.call(call_args)
 
@@ -45,12 +52,10 @@ def list_templates():
 
 def export(name, dest, template_dir):
     if os.path.isdir(dest):
-        if args['-v']:
-            print 'Found %s, removing.' % dest
+        vprint('Found %s, removing.' % dest)
         shutil.rmtree(dest)
 
-    if args['-v']:
-        print 'Copying to %s.' % dest
+    vprint('Copying to %s.' % dest)
 
     template = template_dir + '/' + name
     shutil.copytree(template, dest)
@@ -74,8 +79,7 @@ def init():
     else:
         target_dir = '/tmp/' + template_name
 
-    if args['-v']:
-        print 'Creating %s at %s.' % (template_name, template_dir)
+    vprint('Creating %s at %s.' % (template_name, template_dir))
 
     export(template_name, target_dir, template_dir)
 
@@ -89,9 +93,11 @@ def up():
     os.chdir(target_dir)
     call(["fig", "up", "-d"])
 
+def kill():
+    vprint('kill')
 
 if __name__ == '__main__':
-    args = docopt(__doc__, version='fig-seed 0.2')
+    args = docopt(__doc__, version='fig-seed 0.3')
 
     if args['list']:
         list_templates()
@@ -104,3 +110,6 @@ if __name__ == '__main__':
 
     if args['sample']:
         up()
+
+    if args['kill']:
+        kill()
