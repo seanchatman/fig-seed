@@ -27,6 +27,8 @@ import shelve
 
 __author__ = 'arby'
 
+#docker run --rm -v /usr/local/bin:/target jpetazzo/nsenter
+#docker-enter a30645361de9 ls -la
 
 def call(call_args):
     subprocess.call(call_args)
