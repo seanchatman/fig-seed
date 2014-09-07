@@ -3,8 +3,6 @@
 
 Usage:
   fig-seed.py list
-  fig-seed.py kill
-
   fig-seed.py up <template_name>
   fig-seed.py sample <template_name>
   fig-seed.py [-uv] init [<template_name> <target_directory>]
@@ -93,8 +91,6 @@ def up():
     os.chdir(target_dir)
     call(["fig", "up", "-d"])
 
-def kill():
-    vprint('kill')
 
 if __name__ == '__main__':
     args = docopt(__doc__, version='fig-seed 0.3')
@@ -110,6 +106,3 @@ if __name__ == '__main__':
 
     if args['sample']:
         up()
-
-    if args['kill']:
-        kill()
