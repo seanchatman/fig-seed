@@ -56,4 +56,14 @@ docs/_build/
 fig-seed.iml
 .idea
 
+# Node.js
+**/.cachebust
+**/node_modules/
+**/node_modules/bower_components/
+**/client-built/
+**/config/development.json
+**/config/production.json
+**/config/staging.json
+**/log/
+**/npm-debug.log
 
