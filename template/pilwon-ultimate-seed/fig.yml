@@ -1,0 +1,11 @@
+web:
+  build: .
+  links:
+  - redis
+  - mongodb
+  ports:
+  - "3000:80"
+redis:
+  image: redis
+mongodb:
+  image: mongodb

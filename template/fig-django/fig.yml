@@ -1,4 +1,4 @@
-db:
+postgres:
   image: postgres
 web:
   build: .
@@ -8,4 +8,4 @@ web:
   ports:
     - "8000:8000"
   links:
-    - db
+    - postgres

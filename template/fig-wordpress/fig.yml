@@ -4,10 +4,10 @@ web:
   ports:
     - "8000:8000"
   links:
-    - db
+    - mysql
   volumes:
     - .:/code
-db:
+mysql:
   image: orchardup/mysql
   environment:
     MYSQL_DATABASE: wordpress

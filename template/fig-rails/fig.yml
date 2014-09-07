@@ -1,4 +1,4 @@
-db:
+postgres:
   image: postgres
   ports:
     - "5432"
@@ -10,4 +10,4 @@ web:
   ports:
     - "3000:3000"
   links:
-    - db
+    - postgres
