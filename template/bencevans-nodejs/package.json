@@ -1,0 +1,15 @@
+{
+    "name": "fig-demo",
+    "version": "0.0.0",
+    "description": "",
+    "main": "server.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node server.js"
+    },
+    "author": "Ben Evans <ben@bensbit.co.uk> (http://bensbit.co.uk)",
+    "license": "MIT",
+    "dependencies": {
+        "express": "~3.4.8"
+    }
+}

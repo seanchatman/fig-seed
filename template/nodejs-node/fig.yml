@@ -1,7 +1,0 @@
-web:
-  image: node:0.10.31-onbuild
-  command: node /code/example.js
-  volumes:
-   - .:/code
-  ports:
-   - "127.0.0.1:1337:1337"
