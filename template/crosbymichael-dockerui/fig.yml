@@ -1,0 +1,10 @@
+web:
+  build: .
+  volumes:
+    - .:/code
+  ports:
+    - "9000:9000"
+#  links:
+#    - db
+#db:
+#  image: postgres
