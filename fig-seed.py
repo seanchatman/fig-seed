@@ -4,6 +4,7 @@
 Usage:
   fig-seed.py list
   fig-seed.py up <template_name>
+  fig-seed.py sample <template_name>
   fig-seed.py [-uv] init [<template_name> <target_directory>]
 
   -v, --verbose       verbose mode
@@ -97,4 +98,7 @@ if __name__ == '__main__':
         init()
 
     if args['up']:
+        up()
+
+    if args['sample']:
         up()

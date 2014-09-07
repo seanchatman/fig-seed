@@ -1,4 +1,4 @@
-FROM python:2.7
+FROM phusion/passenger-full
 
 ADD . /code
 WORKDIR /code
