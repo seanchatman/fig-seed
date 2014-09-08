@@ -1,7 +1,5 @@
 FROM crosbymichael/golang
 
-ADD . /app/
-WORKDIR /app/
+ADD . /code/
+WORKDIR /code/
 RUN go build dockerui.go
-EXPOSE 9000
-ENTRYPOINT ["./dockerui"]
