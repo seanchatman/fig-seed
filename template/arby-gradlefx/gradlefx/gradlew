@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+export GRADLE_OPTS=-Dorg.gradle.native=false
 
 ##############################################################################
 ##
