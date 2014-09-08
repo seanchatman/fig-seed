@@ -10,4 +10,4 @@ It also imports package `internal` from the [`vendor`](vendor) subdirectory and 
 
 - Run the following command
 
-        docker run -p 8080 google/golang-hello
+        python fig-seed.py sample golang-docker-hello
