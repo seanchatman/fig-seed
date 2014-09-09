@@ -3,6 +3,7 @@
 
 Usage:
   fig-seed.py list
+  fig-seed.py killall
   fig-seed.py up <template_name>
   fig-seed.py sample <template_name>
   fig-seed.py [-uv] init [<template_name> <target_directory>]
@@ -24,11 +25,13 @@ import os
 import shutil
 import subprocess
 import shelve
+import docker
 
 __author__ = 'arby'
 
 #docker run --rm -v /usr/local/bin:/target jpetazzo/nsenter
 #docker-enter a30645361de9 ls -la
+
 
 def vprint(value):
     if args['-v']:
@@ -92,6 +95,30 @@ def up():
     call(["fig", "up", "-d"])
 
 
+def kill():
+    # TODO only kill containers initiated by fig-seed.py
+    try:
+        answer = raw_input('Kill all running containers? [Y,n] ')
+        if 'n' in answer.lower():
+            raise SystemExit
+        else:
+            try:
+                url = os.environ['DOCKER_HOST']
+            except KeyError, e:
+                print 'Please check that the $' + e.message + ' environment variable is properly set.'
+                raise SystemExit
+
+            client = docker.Client(base_url=url,
+                                   timeout=10)
+
+            for container in client.containers():
+                client.kill(container)
+                c = container
+                print 'killed', c['Id'][:12], c['Command'], c['Status']
+    except KeyboardInterrupt:
+        raise SystemExit
+
+
 if __name__ == '__main__':
     args = docopt(__doc__, version='fig-seed 0.3')
 
@@ -106,3 +133,6 @@ if __name__ == '__main__':
 
     if args['sample']:
         up()
+
+    if args['killall']:
+        kill()
