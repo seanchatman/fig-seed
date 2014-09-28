@@ -3,9 +3,10 @@
 
 Usage:
   fig-seed.py list
-  fig-seed.py killall
-  fig-seed.py up <template_name>
-  fig-seed.py sample <template_name>
+  fig-seed.py [-v] kill
+  fig-seed.py [-v] stop
+  fig-seed.py [-v] up <template_name>
+  fig-seed.py [-v] sample <template_name>
   fig-seed.py [-uv] init [<template_name> <target_directory>]
 
   -v, --verbose       verbose mode
@@ -31,6 +32,25 @@ __author__ = 'arby'
 
 #docker run --rm -v /usr/local/bin:/target jpetazzo/nsenter
 #docker-enter a30645361de9 ls -la
+
+fig_dir = os.path.expanduser("~")+'/.figseed'
+
+
+def get_client():
+    try:
+    #     url = os.environ['DOCKER_HOST']
+        url = 'unix://var/run/docker.sock'
+    except KeyError, e:
+        print 'Please check that the $' + e.message + ' environment variable is properly set.'
+        raise SystemExit
+
+    return docker.Client(base_url=url,
+                       timeout=10)
+
+
+def create_folder():
+    if not os.path.isdir(fig_dir):
+        os.mkdir(fig_dir)
 
 
 def vprint(value):
@@ -94,6 +114,12 @@ def up():
     os.chdir(target_dir)
     call(["fig", "up", "-d"])
 
+    client = get_client()
+
+    with open(fig_dir+"/up", "w") as upfile:
+        for container in client.containers():
+            upfile.write(str(dir(container)))
+
 
 def kill():
     # TODO only kill containers initiated by fig-seed.py
@@ -102,25 +128,39 @@ def kill():
         if 'n' in answer.lower():
             raise SystemExit
         else:
-            try:
-                url = os.environ['DOCKER_HOST']
-            except KeyError, e:
-                print 'Please check that the $' + e.message + ' environment variable is properly set.'
-                raise SystemExit
-
-            client = docker.Client(base_url=url,
-                                   timeout=10)
+            client = get_client()
 
             for container in client.containers():
                 client.kill(container)
                 c = container
-                print 'killed', c['Id'][:12], c['Command'], c['Status']
+                vprint('Killed s% s% s%' % c['Id'][:12], c['Command'], c['Status'])
     except KeyboardInterrupt:
         raise SystemExit
 
 
+def stop():
+    # TODO only kill containers initiated by fig-seed.py
+    try:
+        answer = raw_input('Stop all running containers? [Y,n] ')
+        if 'n' in answer.lower():
+            raise SystemExit
+        else:
+            client = get_client()
+
+            for container in client.containers():
+                client.stop(container)
+                c = container
+                vprint('Stopped s% s% s%' % c['Id'][:12], c['Command'], c['Status'])
+    except KeyboardInterrupt:
+        raise SystemExit
+
+
+
+
 if __name__ == '__main__':
     args = docopt(__doc__, version='fig-seed 0.3')
+
+    create_folder()
 
     if args['list']:
         list_templates()
@@ -134,5 +174,8 @@ if __name__ == '__main__':
     if args['sample']:
         up()
 
-    if args['killall']:
+    if args['stop']:
+        stop()
+
+    if args['kill']:
         kill()
