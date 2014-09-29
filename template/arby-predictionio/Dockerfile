@@ -1,5 +1,14 @@
-FROM java:8
+FROM phusion/baseimage:0.9.13
 MAINTAINER Sean Chatman <xpointsh@gmail.com>
+
+ENV JAVA_VERSION 8u40
+
+RUN apt-get update && apt-get install -y \
+    curl \
+    openjdk-8-jdk="$JAVA_VERSION"* \
+    unzip \
+    wget \
+    git
 
 RUN wget http://download.prediction.io/PredictionIO-0.8.0.tar.gz
 
