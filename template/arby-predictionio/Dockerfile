@@ -30,4 +30,4 @@ RUN tar zxvf hbase-0.98.6-hadoop2-bin.tar.gz
 
 RUN echo '/usr/lib/jvm/java-7-openjdk-amd64/' > /etc/container_environment/JAVA_HOME
 
-RUN rm PredictionIO-0.8.0.tar.gz zxvf spark-1.1.0-bin-hadoop2.4.tgz elasticsearch-1.3.2.tar.gz hbase-0.98.6-hadoop2-bin.tar.gz
+RUN rm PredictionIO-0.8.0.tar.gz spark-1.1.0-bin-hadoop2.4.tgz elasticsearch-1.3.2.tar.gz hbase-0.98.6-hadoop2-bin.tar.gz
