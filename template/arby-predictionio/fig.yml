@@ -1,0 +1,2 @@
+predictionio:
+  build: .
