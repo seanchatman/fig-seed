@@ -132,8 +132,6 @@ def kill():
 
             for container in client.containers():
                 client.kill(container)
-                c = container
-                vprint('Killed s% s% s%' % c['Id'][:12], c['Command'], c['Status'])
     except KeyboardInterrupt:
         raise SystemExit
 
@@ -149,8 +147,6 @@ def stop():
 
             for container in client.containers():
                 client.stop(container)
-                c = container
-                vprint('Stopped s% s% s%' % c['Id'][:12], c['Command'], c['Status'])
     except KeyboardInterrupt:
         raise SystemExit
 
