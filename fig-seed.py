@@ -5,6 +5,7 @@ Usage:
   fig-seed.py list
   fig-seed.py [-v] kill
   fig-seed.py [-v] stop
+  fig-seed.py [-v] rmi
   fig-seed.py [-v] up <template_name>
   fig-seed.py [-v] sample <template_name>
   fig-seed.py [-uv] init [<template_name> <target_directory>]
@@ -151,6 +152,19 @@ def stop():
         raise SystemExit
 
 
+def rmi():
+    try:
+        answer = raw_input('Remove all images? [y,N] ')
+        if 'y' in answer.lower():
+            client = get_client()
+
+            for image in client.images():
+                client.remove_image(image)
+
+        else:
+            raise SystemExit
+    except KeyboardInterrupt:
+        raise SystemExit
 
 
 if __name__ == '__main__':
@@ -175,3 +189,7 @@ if __name__ == '__main__':
 
     if args['kill']:
         kill()
+
+    if args['rmi']:
+        rmi()
+
