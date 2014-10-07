@@ -1,0 +1,7 @@
+web:
+  build: .
+  command: python pin_clone.py
+  ports:
+   - "5000:5000"
+  volumes:
+   - .:/code

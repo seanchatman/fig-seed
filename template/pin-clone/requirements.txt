@@ -1,0 +1,4 @@
+flask
+Flask-Restless
+Flask-SQLAlchemy
+SQLAlchemy
